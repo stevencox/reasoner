@@ -9,7 +9,7 @@ requirements = [str(r.req) for r in install_reqs]
 setup(
     name = 'reasoner',
     packages = [ 'graph_components' ], # this must be the same as the name above
-    package_data={ },
+    package_data={ "." : [ "requirements.txt" ] },
     version = '${version}',
     description = 'Reasoner common components',
     author = 'Steve Cox',
