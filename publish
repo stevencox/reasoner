@@ -4,7 +4,7 @@ write_setup_config () {
 cat <<EOF > setup.py
 from distutils.core import setup
 from pip.req import parse_requirements
-install_reqs = parse_requirements("requirements.txt", session="i")
+install_reqs = parse_requirements("reasoner/requirements.txt", session="i")
 requirements = [str(r.req) for r in install_reqs]
 setup(
     name = 'reasoner',
