@@ -8,8 +8,8 @@ install_reqs = parse_requirements("requirements.txt", session="i")
 requirements = [str(r.req) for r in install_reqs]
 setup(
     name = 'reasoner',
-    packages = [ 'graph_components' ], # this must be the same as the name above
-    package_data={ "." : [ "requirements.txt" ] },
+    packages = [ 'reasoner' ], # this must be the same as the name above
+    package_data={ "reasoner" : [ "requirements.txt" ] },
     version = '${version}',
     description = 'Reasoner common components',
     author = 'Steve Cox',
