@@ -66,7 +66,7 @@ class KEdge():
             export_properties[key] = 'See JSON for details'
         return export_properties
 
-  class QueryResult:
+  class KGraph:
       def __init__(self, nodes, edges):
           self.nodes = nodes
           self.edges = edges
