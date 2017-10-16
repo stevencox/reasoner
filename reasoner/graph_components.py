@@ -1,5 +1,4 @@
 from functools import singledispatch
-import traceback
 
 class KNode():
     """Used as the node object in KnowledgeGraph.
@@ -18,7 +17,11 @@ class KNode():
         return self.__repr__()
     def __hash__(self):
         """Class needs __hash__ in order to be used as a node in networkx"""
-        return self.identifier.__hash__()
+        if self.layer_number is None:
+            return self.identifier.__hash__()
+        else: 
+            s = '%s:%d' % (self.identifier,self.layer_number)
+            return s.__hash__()
     def to_json(self):
         """Used to serialize a node to JSON."""
         j = { 'identifier': self.identifier, \
@@ -75,17 +78,8 @@ class KEdge():
             export_properties[key] = 'See JSON for details'
         return export_properties
 
-class KGraph:
-    def __init__(self, nodes=[], edges=[]):
-        self.nodes = nodes
-        self.edges = edges
-    def to_json (self):
-        r = []
-        for e in self.edges:
-            r.append (e)
-        for n in self.nodes:
-            r.append (n)
-        return r
+  
+
 
 ##
 # We want to be able to serialize our knowledge graph to json.  That means being able to serialize KNode/KEdge.
