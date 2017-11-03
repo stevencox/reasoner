@@ -12,7 +12,8 @@ class KNode():
         self.layer_number = None
         self.properties = {}
     def __repr__(self):
-        return "KNode(id={0},type={1})".format (self.identifier, self.node_type)
+        #return "KNode(id={0},type={1})".format (self.identifier, self.node_type)
+        return "N({0},t={1})".format (self.identifier, self.node_type)
     def __str__(self):
         return self.__repr__()
     def __hash__(self):
@@ -54,13 +55,20 @@ class KEdge():
     Instances of this class should be returned from worldgraph/greenT"""
     def __init__(self, edge_source, edge_type, properties = None):
         self.edge_source = edge_source
+        self.source_node = None
+        self.target_node = None
         self.edge_type = edge_type
         if properties is not None:
             self.properties = properties
         else:
             self.properties = {}
+    def long_form (self):
+        return "E(src={0},type={1},srcn={2},destn={3})".format (self.edge_source, self.edge_type,
+                                                                self.source_node, self.target_node)
     def __repr__(self):
-        return "KEdge(edge_source={0},edge_type={1})".format (self.edge_source, self.edge_type)
+        #return "KEdge(edge_source={0},edge_type={1})".format (self.edge_source, self.edge_type)
+        return self.long_form ()
+#        return "E(src={0},type={1})".format (self.edge_source, self.edge_type)
     def __str__(self):
         return self.__repr__()
     def to_json(self):
