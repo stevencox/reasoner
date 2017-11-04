@@ -11,6 +11,16 @@ class KNode():
         #This is only going to make sense for linear paths...Need to rethink probably
         self.layer_number = None
         self.properties = {}
+        self.synonyms = []
+    def add_synonym(self,synonymous_node):
+        """Merge anther KNode (representing a synonym) into this KNode."""
+        self.synonyms.append(synonymous_node.identifier)
+        for propkey in synonymous_node.properties:
+            if propkey in self.properties:
+                #TODO: this is messy
+                self.properties[ propkey ] = [ self.properties[propkey], syonymous_node.properties[propkey] ]
+            else:
+                self.properties[ propkey ] = syonymous_node.properties[propkey]
     def __repr__(self):
         #return "KNode(id={0},type={1})".format (self.identifier, self.node_type)
         return "N({0},t={1})".format (self.identifier, self.node_type)
