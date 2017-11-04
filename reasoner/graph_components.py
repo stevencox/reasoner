@@ -52,18 +52,19 @@ class KNode():
 class KEdge():
     """Used as the edge object in KnowledgeGraph.
 
-    Instances of this class should be returned from worldgraph/greenT"""
-    def __init__(self, edge_source, edge_type, properties = None):
+    Instances of this class should be returned from greenT"""
+    def __init__(self, edge_source, edge_function, properties = None, is_synonym=False):
         self.edge_source = edge_source
         self.source_node = None
         self.target_node = None
-        self.edge_type = edge_type
+        self.edge_function = edge_function
         if properties is not None:
             self.properties = properties
         else:
             self.properties = {}
+        self.is_synonym = is_synonym
     def long_form (self):
-        return "E(src={0},type={1},srcn={2},destn={3})".format (self.edge_source, self.edge_type,
+        return "E(src={0},type={1},srcn={2},destn={3})".format (self.edge_source, self.edge_function,
                                                                 self.source_node, self.target_node)
     def __repr__(self):
         #return "KEdge(edge_source={0},edge_type={1})".format (self.edge_source, self.edge_type)
@@ -73,15 +74,17 @@ class KEdge():
         return self.__repr__()
     def to_json(self):
         """Used to serialize a node to JSON."""
-        j = { 'edge_source' : self.edge_source, \
-              'edge_type'   : self.edge_type }
+        j = { 'edge_source'     : self.edge_source, \
+              'edge_function'   : self.edge_function, \
+              'is_synonym'      : self.is_synonym }
         for key in self.properties:
             j[key] = self.properties[key]
         return j
     def get_exportable(self):
         """Returns information to make a simpler node in networkx.  Helps with finicky graphml writer"""
-        export_properties = { 'edge_type'   : self.edge_type,  \
-                              'edge_source' : self.edge_source }
+        export_properties = { 'edge_source'     : self.edge_source, \
+              'edge_function'   : self.edge_function, \
+              'is_synonym'      : self.is_synonym }
         for key in self.properties:
             export_properties[key] = 'See JSON for details'
         return export_properties
