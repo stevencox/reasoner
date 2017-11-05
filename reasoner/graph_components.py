@@ -1,4 +1,5 @@
 from functools import singledispatch
+from reasoner.node_types import node_types
 
 class KNode():
     """Used as the node object in KnowledgeGraph.
@@ -7,9 +8,9 @@ class KNode():
     def __init__(self,identifier,node_type,label=None):
         self.identifier = identifier
         self.label = label
+        if node_type not in node_types:
+            raise ValueError( 'node_type {} unsupported.'.format( node_type ) )
         self.node_type = node_type
-        #This is only going to make sense for linear paths...Need to rethink probably
-        self.layer_number = None
         self.properties = {}
         self.synonyms = []
     def add_synonym(self,synonymous_node):
@@ -26,13 +27,12 @@ class KNode():
         return "N({0},t={1})".format (self.identifier, self.node_type)
     def __str__(self):
         return self.__repr__()
+    #Is using identifier sufficient?  Probably need to be a bit smarter.
     def __hash__(self):
         """Class needs __hash__ in order to be used as a node in networkx"""
-        if self.layer_number is None:
-            return self.identifier.__hash__()
-        else: 
-            s = '%s:%d' % (self.identifier,self.layer_number)
-            return s.__hash__()
+        return self.identifier.__hash__()
+    def __eq__(x,y):
+        return x.identifier == y.identifier
     def to_json(self):
         """Used to serialize a node to JSON."""
         j = { 'identifier': self.identifier, \
@@ -73,6 +73,12 @@ class KEdge():
         else:
             self.properties = {}
         self.is_synonym = is_synonym
+    def __key(self):
+        return (self.source_node, self.target_node, self.edge_source, self.edge_function)
+    def __eq__(x,y):
+        return x.__key() == y.__key()
+    def __hash__(self):
+        return hash(self.__key())
     def long_form (self):
         return "E(src={0},type={1},srcn={2},destn={3})".format (self.edge_source, self.edge_function,
                                                                 self.source_node, self.target_node)
