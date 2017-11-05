@@ -12,10 +12,10 @@ class KNode():
             raise ValueError( 'node_type {} unsupported.'.format( node_type ) )
         self.node_type = node_type
         self.properties = {}
-        self.synonyms = []
+        self.synonyms = set()
     def add_synonym(self,synonymous_node):
         """Merge anther KNode (representing a synonym) into this KNode."""
-        self.synonyms.append(synonymous_node.identifier)
+        self.synonyms.add(synonymous_node.identifier)
         for propkey in synonymous_node.properties:
             if propkey in self.properties:
                 #TODO: this is messy
