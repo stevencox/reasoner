@@ -1,4 +1,4 @@
-DRUG='Drug'
+DRUG='Substance'
 GENE='Gene'
 PATHWAY='Pathway'
 PROCESS='BiologicalProcess'
