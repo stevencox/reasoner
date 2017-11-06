@@ -63,7 +63,7 @@ class KEdge():
     """Used as the edge object in KnowledgeGraph.
 
     Instances of this class should be returned from greenT"""
-    def __init__(self, edge_source, edge_function, properties = None, is_synonym=False):
+    def __init__(self, edge_source, edge_function, properties = None, is_synonym=False, is_support=False):
         self.edge_source = edge_source
         self.source_node = None
         self.target_node = None
@@ -73,6 +73,7 @@ class KEdge():
         else:
             self.properties = {}
         self.is_synonym = is_synonym
+        self.is_support = is_support
     def __key(self):
         return (self.source_node, self.target_node, self.edge_source, self.edge_function)
     def __eq__(x,y):
