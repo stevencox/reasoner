@@ -19,7 +19,14 @@ class KNode():
         for propkey in synonymous_node.properties:
             if propkey in self.properties:
                 #TODO: this is messy
-                self.properties[ propkey ] = [ self.properties[propkey], synonymous_node.properties[propkey] ]
+                if type(self.properties[propkey]) != type(synonymous_node.properties[propkey]):
+                    raise Exception('Problem merging properties {}, {}'.format(type(self.properties[propkey]),type(synonymous_node.properties[propkey])))
+                if isinstance(self.properties[propkey],list):
+                    self.properties[propkey] += synonymous_node.properties[propkey]
+                elif isinstance(self.properties[propkey],set):
+                    self.properties[propkey].update( synonymous_node.properties[propkey] )
+                else:
+                    self.properties[ propkey ] = [ self.properties[propkey], synonymous_node.properties[propkey] ]
             else:
                 self.properties[ propkey ] = synonymous_node.properties[propkey]
     def add_mesh_identifier(self, mesh_id):
