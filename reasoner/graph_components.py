@@ -19,9 +19,9 @@ class KNode():
         for propkey in synonymous_node.properties:
             if propkey in self.properties:
                 #TODO: this is messy
-                self.properties[ propkey ] = [ self.properties[propkey], syonymous_node.properties[propkey] ]
+                self.properties[ propkey ] = [ self.properties[propkey], synonymous_node.properties[propkey] ]
             else:
-                self.properties[ propkey ] = syonymous_node.properties[propkey]
+                self.properties[ propkey ] = synonymous_node.properties[propkey]
     def add_mesh_identifier(self, mesh_id):
         self.properties['mesh_identifiers'].add(mesh_id)
     def __repr__(self):
