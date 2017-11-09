@@ -11,7 +11,7 @@ class KNode():
         if node_type not in node_types:
             raise ValueError( 'node_type {} unsupported.'.format( node_type ) )
         self.node_type = node_type
-        self.properties = {'mesh_identifiers':set()}
+        self.properties = {}
         self.synonyms = set()
     def add_synonym(self,synonymous_node):
         """Merge anther KNode (representing a synonym) into this KNode."""
@@ -30,7 +30,9 @@ class KNode():
             else:
                 self.properties[ propkey ] = synonymous_node.properties[propkey]
     def add_mesh_identifier(self, mesh_id):
-        self.properties['mesh_identifiers'].add(mesh_id)
+        if 'mesh_identifiers' not in self.properties:
+            self.properties['mesh_identifiers'] = []
+        self.properties['mesh_identifiers'].append(mesh_id)
     def __repr__(self):
         #return "KNode(id={0},type={1})".format (self.identifier, self.node_type)
         return "N({0},t={1})".format (self.identifier, self.node_type)
